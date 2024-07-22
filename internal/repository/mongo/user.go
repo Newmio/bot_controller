@@ -13,13 +13,13 @@ func (db *mongoRepo) CreateUser(user entity.User) error {
 	var check entity.User
 	c := db.db.Collection("users")
 
-	if err := c.FindOne(context.Background(), bson.M{"tg_id": user.TgId}).Decode(&check); err != nil {
+	if err := c.FindOne(context.Background(), bson.M{"id_user": user.Id}).Decode(&check); err != nil {
 		if err != mongo.ErrNoDocuments {
 			return pkg.Trace(err)
 		}
 	}
 
-	if check.TgId != 0 {
+	if check.Id != 0 {
 		return nil
 	}
 

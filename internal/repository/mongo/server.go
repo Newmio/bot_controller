@@ -10,6 +10,27 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+func (db *mongoRepo) CreateBot(userId int, login, pass string)error{
+	var result bson.M
+	c := db.db.Collection("bots")
+
+	if err := c.FindOne(context.Background(), bson.M{"login": login}).Decode(&result); err != nil {
+		if err != mongo.ErrNoDocuments {
+			return pkg.Trace(err)
+		}
+	}
+
+	if result["login"] != "" {
+		return nil
+	}
+
+	if _, err := c.InsertOne(context.Background(), bson.M{"tg_id": userId, "login": login, "pass": pass}); err != nil{
+		return pkg.Trace(err)
+	}
+
+	return nil
+}
+
 func (db *mongoRepo) CreateServer(server entity.BotServer) error {
 	var check entity.BotServer
 	c := db.db.Collection("bot_servers")

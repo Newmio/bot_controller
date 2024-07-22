@@ -2,15 +2,21 @@ package app
 
 import (
 	m "bot/internal/configs/mongo"
+	r "bot/internal/configs/redis"
 	"bot/internal/domain/usecase"
 	"bot/internal/repository/mongo"
+	"bot/internal/repository/redis"
 	"bot/internal/transport/telegram"
-	"fmt"
 	"os"
 )
 
 func Init() {
-	db, err := m.OpenDb()
+	m, err := m.OpenDb()
+	if err != nil {
+		panic(err)
+	}
+
+	r, err := r.OpenDb()
 	if err != nil {
 		panic(err)
 	}
@@ -20,9 +26,9 @@ func Init() {
 		panic(err)
 	}
 
-	mongoRepo := mongo.NewMongo(db.Database("telegram"))
-	usecase := usecase.NewUsecase(mongoRepo)
+	mongoRepo := mongo.NewMongo(m.Database("telegram"))
+	redisRepo := redis.NewRedis(r)
+	usecase := usecase.NewUsecase(mongoRepo, redisRepo)
 	handlerBot := telegram.NewHandler(usecase)
-	fmt.Println("start")
 	handlerBot.StartBot(string(token))
 }

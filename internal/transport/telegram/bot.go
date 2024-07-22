@@ -1,8 +1,6 @@
 package telegram
 
 import (
-	"bot/pkg"
-
 	"gopkg.in/telebot.v3"
 )
 
@@ -11,8 +9,9 @@ func (h *handler) botList(c telebot.Context) error {
 }
 
 func (h *handler) addBot(c telebot.Context) error {
-	if err := c.Send("Введите через заптую:\n1. Логин стим\n2. Пароль стим\nНапример: steamlogin, steampassword"); err != nil {
-		return pkg.Trace(err)
-	}
-	return nil
+	return c.Send("Введите через заптую:\n1. Стим логин\n2. Стим пароль\nПример: steamlogin, steampassword")
+}
+
+func (h *handler) addBotResponse(c telebot.Context) error {
+	return c.Send("Бот успешно добавлен!\nЕго можно настроить через:\n1. Найти бота в списке ботов - /bots\n2. Сразу зайти в бота - /bots steamlogin")
 }

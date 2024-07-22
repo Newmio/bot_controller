@@ -3,12 +3,15 @@ module bot
 go 1.22.2
 
 require (
+	github.com/redis/go-redis/v9 v9.6.0
 	github.com/spf13/viper v1.13.0
 	go.mongodb.org/mongo-driver v1.16.0
 	gopkg.in/telebot.v3 v3.3.6
 )
 
 require (
+	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

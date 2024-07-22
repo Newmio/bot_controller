@@ -5,5 +5,5 @@ import (
 )
 
 func (u *usecase) CreateUser(user entity.User) error {
-	return u.r.CreateUser(user)
+	return u.m.CreateUser(user)
 }

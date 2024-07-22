@@ -8,7 +8,7 @@ import (
 
 func ToUser(user *telebot.User) entity.User {
 	return entity.User{
-		TgId:      int(user.ID),
+		Id:      int(user.ID),
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		UserName:  user.Username,

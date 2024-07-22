@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"bot/internal/domain/usecase"
+	"bot/internal/dto"
 	"time"
 
 	"gopkg.in/telebot.v3"
@@ -31,7 +32,7 @@ func (h *handler) StartBot(token string) {
 		},
 		{
 			Text:        "/bots",
-			Description: "Список всех ботов",
+			Description: "Список ботов",
 		},
 		{
 			Text:        "/addbot",
@@ -56,5 +57,16 @@ func (h *handler) StartBot(token string) {
 }
 
 func (h *handler) onText(c telebot.Context) error {
-	return nil
+	resp, err := h.s.OnText(dto.ToUser(c.Sender()), c.Text())
+	if err != nil {
+		return c.Send(dto.ErrorMapper(err))
+	}
+
+	switch resp.Command {
+
+	case "/addbot":
+		return h.addBotResponse(c)
+	}
+
+	return c.Send("Ошибка обработки комманды (*_*)\nПовторите попытку либо обратитесь в поддержку если ошибка повториться")
 }

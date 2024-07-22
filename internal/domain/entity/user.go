@@ -1,7 +1,7 @@
 package entity
 
 type User struct {
-	TgId      int    `bson:"tg_id"`
+	Id      int    `bson:"id_user"`
 	FirstName string `bson:"first_name"`
 	LastName  string `bson:"last_name"`
 	UserName  string `bson:"username"`
