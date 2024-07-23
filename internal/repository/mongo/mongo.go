@@ -11,6 +11,7 @@ type IMongo interface {
 	GetServers(limit, offset int64) ([]entity.BotServer, error)
 	CreateServer(server entity.BotServer) error
 	CreateBot(bot entity.Bot) error
+	GetBots(limit, offset int64) ([]entity.Bot, error)
 }
 
 type mongoRepo struct {

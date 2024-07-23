@@ -5,6 +5,10 @@ import (
 	"bot/pkg"
 )
 
+func (s *usecase) GetBots(limit, offset int64) ([]entity.Bot, error) {
+	return s.m.GetBots(limit, offset)
+}
+
 func (s *usecase) Addbot(userId int, arg string) error {
 	actions, err := s.sessionCommandMapper(userId, entity.AddBotTemplate, entity.CommandAddBot, arg)
 	if err != nil {

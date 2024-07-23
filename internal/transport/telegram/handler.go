@@ -53,12 +53,24 @@ func (h *handler) StartBot(token string) {
 	bot.Use(h.setCommandSession)
 
 	bot.Handle("/start", h.start)
-	bot.Handle("/bots", h.botList)
+	bot.Handle(entity.CommandBots, h.botsCommand)
+	bot.Handle(telebot.OnCallback, h.onCallback)
 	bot.Handle(entity.CommandAddBot, h.addBot)
 	bot.Handle("/servers", h.servers)
 	bot.Handle(telebot.OnText, h.onText)
 
 	bot.Start()
+}
+
+func (h *handler) onCallback(c telebot.Context) error {
+	switch {
+
+	case strings.HasPrefix(strings.TrimSpace(c.Data()), "bots_"):
+		return h.botsButton(c)
+
+	default:
+		return c.Send("Неизвестная кнопка")
+	}
 }
 
 func (h *handler) setCommandSession(next telebot.HandlerFunc) telebot.HandlerFunc {

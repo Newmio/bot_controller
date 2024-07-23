@@ -16,6 +16,7 @@ type IUsecase interface {
 	OnText(user entity.User, text string) (dto.Response, error)
 	SetSessionCommand(userId int, command string) error
 	Addbot(userId int, arg string) error
+	GetBots(limit, offset int64) ([]entity.Bot, error)
 }
 
 type usecase struct {
