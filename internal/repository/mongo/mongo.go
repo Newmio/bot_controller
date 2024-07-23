@@ -10,7 +10,7 @@ type IMongo interface {
 	CreateUser(user entity.User) error
 	GetServers(limit, offset int64) ([]entity.BotServer, error)
 	CreateServer(server entity.BotServer) error
-	CreateBot(userId int, login, pass string)error
+	CreateBot(bot entity.Bot) error
 }
 
 type mongoRepo struct {

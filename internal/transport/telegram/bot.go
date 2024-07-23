@@ -9,7 +9,12 @@ func (h *handler) botList(c telebot.Context) error {
 }
 
 func (h *handler) addBot(c telebot.Context) error {
-	return c.Send("Введите через заптую:\n1. Стим логин\n2. Стим пароль\nПример: steamlogin, steampassword")
+	err := c.Send("Вы перешли в опцию создания бота")
+	if err != nil {
+		return c.Send(err)
+	}
+
+	return c.Send(h.s.Addbot(int(c.Sender().ID), "").Error())
 }
 
 func (h *handler) addBotResponse(c telebot.Context) error {
